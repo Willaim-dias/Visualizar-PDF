@@ -1,7 +1,5 @@
 package model;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,19 +15,18 @@ public class GetData {
     private final DbConnection dbConnection = new DbConnection();
     private final Connection conn = dbConnection.getConnection();
     
-    public void recuperarPDF(int id, String caminhoSaida) {
+    public byte[] recuperarPDF(int id) {
         String sql = "SELECT PDF FROM Celular_PDF WHERE ID = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {  
                 byte[] pdfBytes = rs.getBytes("PDF");
-                try (FileOutputStream fos = new FileOutputStream(caminhoSaida)) {
-                    fos.write(pdfBytes);
-                }
+                return pdfBytes;
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
         }
+        return null;
     }
     
     public List<Map<String, Object>> recuperarDatas() {
