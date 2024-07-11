@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import view.ShowMessage;
 
 public class DbConnection {
 
@@ -14,7 +15,7 @@ public class DbConnection {
     }
     
     private Connection openConnection() {
-        File file = new File("SavePDF.db");
+        File file = new File("F:\\Teste/SavePDF.db");
 
         if (file.exists()) {
             if (conn == null) {
@@ -26,7 +27,12 @@ public class DbConnection {
             } else {
                 return conn;
             }
+        } else {
+            ShowMessage message = new ShowMessage();
+            message.information("Banco de dados não encontrado");
+            System.exit(0);
         }
+        
         return null;
     }
     
