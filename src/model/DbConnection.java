@@ -22,7 +22,6 @@ public class DbConnection {
                     conn = DriverManager.getConnection("jdbc:sqlite:SavePDF.db");
                     return conn;
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
                 }
             } else {
                 return conn;
